@@ -1,2 +1,0 @@
-export interface HealthDependency{check():Promise<void>}
-export async function healthCheck(deps:Record<string,HealthDependency>){const checks:Record<string,"ok"|"failed">={};await Promise.all(Object.entries(deps).map(async([name,d])=>{try{await d.check();checks[name]="ok"}catch{checks[name]="failed"}}));return{status:Object.values(checks).every(v=>v==="ok")?"ok":"degraded",timestamp:new Date().toISOString(),checks}}

@@ -1,2 +1,0 @@
-import {BotRegistry} from "./bots.js";import {classifySurface} from "./eagle-eye.js";import {ActionPlanner} from "./planner.js";
-const bots=new BotRegistry();const observation={botUsername:"@Apple_moviebot",chatId:"demo",messageId:1,text:"Search results",buttons:[{text:"The Incredible Hulk (2008)"},{text:"Next page"}],observedAt:new Date().toISOString()};const surface=classifySurface(observation);console.log({surface,planned:new ActionPlanner(bots).plan("MOVIE","@Apple_moviebot",surface,observation),seriesBotAllowedForMovie:bots.assertAllowed("@quinsonnbot","MOVIE")});

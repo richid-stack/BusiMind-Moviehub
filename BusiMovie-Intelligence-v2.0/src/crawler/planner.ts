@@ -1,3 +1,0 @@
-import type {ActionKind,MediaKind,PlannedAction,SurfaceObservation,SurfaceKind} from "./types.js";import {inferAction} from "./eagle-eye.js";import {BotRegistry} from "./bots.js";
-const safe=(m:MediaKind,a:ActionKind)=>m==="MOVIE"?!["SELECT_SEASON","SELECT_EPISODE"].includes(a):true;
-export class ActionPlanner{constructor(private bots:BotRegistry){}plan(m:MediaKind,bot:string,s:SurfaceKind,o:SurfaceObservation):PlannedAction[]{if(!this.bots.assertAllowed(bot,m))return[];const p=this.bots.get(bot)!;return o.buttons.map(button=>{const kind=inferAction(button,s);const score=p.capabilities[kind]??.25;return{kind,button,score,reason:`${kind} on ${s}; capability ${score.toFixed(2)}`} as PlannedAction}).filter(a=>a.kind!=="NOOP"&&safe(m,a.kind)).sort((a,b)=>b.score-a.score)}}
