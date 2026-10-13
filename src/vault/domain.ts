@@ -1,0 +1,11 @@
+export type MediaType="MOVIE"|"SERIES"|"EPISODE";
+export type RequestMediaType="MOVIE"|"SERIES";
+export type VaultKind="MOVIE_VAULT"|"SERIES_VAULT";
+export type AssetState="DISCOVERED"|"DOWNLOADING"|"DOWNLOADED"|"VERIFIED"|"INGESTED"|"REJECTED"|"FAILED";
+export interface MediaRequest{requestId:string;title:string;mediaType:RequestMediaType;year?:number;season?:number;episode?:number;quality?:string}
+export interface CanonicalWork{canonicalId:string;mediaType:RequestMediaType;title:string;normalizedTitle:string;year?:number;alternateTitles?:string[]}
+export interface CandidateEvidence{candidateId:string;source:"TELEGRAM";botUsername:string;chatId:string;messageId:number;title?:string;year?:number;mediaType?:MediaType;canonicalId?:string;season?:number;episode?:number;filename?:string;mimeType?:string;sizeBytes?:number;rawLabels:string[]}
+export interface AssetFingerprint{fingerprint:string;chatId:string;messageId:number;sizeBytes?:number;mimeType?:string;filename?:string}
+export interface VerifiedAsset{request:MediaRequest;work:CanonicalWork;evidence:CandidateEvidence;fingerprint:AssetFingerprint;state:"VERIFIED"}
+export interface AssetRecord{canonicalId:string;mediaType:MediaType;vaultKind:VaultKind;title:string;year?:number;season?:number;episode?:number;sourceChatId:string;sourceMessageId:number;sourceBot:string;filename?:string;mimeType?:string;sizeBytes?:number;fingerprint:string;verificationStatus:"VERIFIED"}
+export interface IngestResult{accepted:boolean;vault:VaultKind;assetId?:string;reason?:"DUPLICATE_SOURCE"|"INVALID_VAULT"|"NOT_VERIFIED"|"STORAGE_ERROR"}
